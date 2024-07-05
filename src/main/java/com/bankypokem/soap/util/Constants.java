@@ -7,4 +7,6 @@ public class Constants {
     public static final String ID= "id";
     public static final String NAME= "name";
     public static final String LOCATION_AREA_ENCOUNTERS= "location_area_encounters";
+    public static final String UTF_8= "utf-8";
+    public static final String HTTP_EXCHANGE= "com.sun.xml.internal.ws.http.exchange";
 }
