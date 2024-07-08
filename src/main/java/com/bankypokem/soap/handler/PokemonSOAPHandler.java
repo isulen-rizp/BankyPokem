@@ -5,6 +5,7 @@ import com.bankypokem.soap.model.RequestData;
 import com.bankypokem.soap.repository.RequestDataRepository;
 import com.bankypokem.soap.util.Constants;
 import com.sun.net.httpserver.HttpExchange;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPBody;
@@ -19,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Set;
 
 @Log4j2
+@Setter
 public class PokemonSOAPHandler implements SOAPHandler<SOAPMessageContext> {
 
     private RequestDataRepository requestDataRepository;
@@ -58,9 +60,15 @@ public class PokemonSOAPHandler implements SOAPHandler<SOAPMessageContext> {
             }
 
             if(requestData.getSoapRequest()!= null && requestData.getSoapResponse()!=null){
-                requestData.setIpOrigin(server.getRemoteAddress().getHostString());
-                requestData.setTotalTimeMs(requestData.getRequestDate().until(LocalDateTime.now(), ChronoUnit.MILLIS));
+                if(server.getRemoteAddress() != null){
+                    requestData.setIpOrigin(server.getRemoteAddress().getHostString());
+                }
+                if(requestData.getRequestDate()!=null){
+                    requestData.setTotalTimeMs(requestData.getRequestDate().until(LocalDateTime.now(), ChronoUnit.MILLIS));
+                }
+
                 requestDataRepository.save(requestData);
+                //print all records in H2, to confirm records have been saved
                 log.info(requestDataRepository.findAll());
 
                 requestData= new RequestData();
