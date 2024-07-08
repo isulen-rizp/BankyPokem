@@ -15,8 +15,10 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.Set;
 
 @Log4j2
@@ -33,7 +35,7 @@ public class PokemonSOAPHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public Set<QName> getHeaders() {
-        return null;
+        return new HashSet<>();
     }
 
     @Override
@@ -44,7 +46,7 @@ public class PokemonSOAPHandler implements SOAPHandler<SOAPMessageContext> {
             SOAPMessage soapMessage= context.getMessage();
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             soapMessage.writeTo(out);
-            String message = new String(out.toByteArray(), Constants.UTF_8);
+            String message = new String(out.toByteArray(), StandardCharsets.UTF_8);
             boolean isOutbound= (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
             if (isOutbound) {
@@ -52,7 +54,7 @@ public class PokemonSOAPHandler implements SOAPHandler<SOAPMessageContext> {
                 requestData.setSoapResponse(message);
             }
             else{
-                message= message.replaceAll("(\\r|\\n)", "");
+                message= message.replaceAll("[\\r|\\n]", "");
                 log.info("SOAP request:" + message);
                 requestData.setSoapRequest(message);
                 requestData.setMethodExecuted(getMethodName(soapMessage));
@@ -110,6 +112,6 @@ public class PokemonSOAPHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public void close(MessageContext context) {
-
+        log.info("SOAP Handler close.");
     }
 }

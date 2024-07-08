@@ -12,10 +12,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-public class PokeApiServiceTest {
+class PokeApiServiceTest {
 
     @Test
-    public void testGetPokemon(){
+    void testGetPokemon(){
         RestTemplate mockRestTemplate= mock(RestTemplate.class);
 
         String mockJson="{\"name\":\"bulbasaur\"}";

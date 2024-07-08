@@ -16,10 +16,10 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class PokemonSOAPHandlerTest {
+class PokemonSOAPHandlerTest {
 
     @Test
-    public void testHandleMessageResponse() throws IOException, SOAPException {
+    void testHandleMessageResponse() throws IOException, SOAPException {
 
         SOAPMessageContext mockContext = mock(SOAPMessageContext.class);
         SOAPMessage mockSoapMessage= mock(SOAPMessage.class);
@@ -63,7 +63,7 @@ public class PokemonSOAPHandlerTest {
     }
 
     @Test
-    public void testHandleMessageRequest() throws IOException, SOAPException {
+    void testHandleMessageRequest() throws IOException, SOAPException {
 
         SOAPMessageContext mockContext = mock(SOAPMessageContext.class);
         SOAPMessage mockSoapMessage= mock(SOAPMessage.class);

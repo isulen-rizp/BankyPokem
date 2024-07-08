@@ -2,7 +2,6 @@ package com.bankypokem.soap.service;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import javax.servlet.http.HttpServletRequest;
 
 @WebService
 public interface PokemonService {
