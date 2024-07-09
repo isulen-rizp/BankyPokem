@@ -22,8 +22,11 @@ public class PokeApiService {
     }
 
     public ResponseEntity<String> getPokemon(String name){
-        if(name.isEmpty()){
+        if(name==null || name.trim().isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is empty or null.");
+        }
+        if(name.trim().equals("?")){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especial character ? not valid.");
         }
         HttpHeaders headers= new HttpHeaders();
         headers.set("User-Agent", "Application");
