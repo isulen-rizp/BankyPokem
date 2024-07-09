@@ -17,9 +17,6 @@ public class PokeRestController {
     @Autowired
     private PokemonService pokemonServiceImpl;
 
-    public PokeRestController(){
-    }
-
     @GetMapping("/{name}/abilities")
     @ApiOperation(value = "Obtener abilities de Pokemon")
     public String abilities(@PathVariable String name){
@@ -40,13 +37,13 @@ public class PokeRestController {
 
     @GetMapping("/{name}/id")
     @ApiOperation(value = "Obtener Id de Pokemon")
-    public int id(@PathVariable String name){
+    public String id(@PathVariable String name){
         return pokemonServiceImpl.id(name);
     }
 
     @GetMapping("/{name}/baseExperince")
     @ApiOperation(value = "Obtener BaseExperience de Pokemon")
-    public int baseExperience(@PathVariable String name){
+    public String baseExperience(@PathVariable String name){
         return pokemonServiceImpl.baseExperience(name);
     }
 
@@ -55,5 +52,4 @@ public class PokeRestController {
     public String locationAreaEncounters(@PathVariable String name){
         return pokemonServiceImpl.locationAreaEncounters(name);
     }
-
 }

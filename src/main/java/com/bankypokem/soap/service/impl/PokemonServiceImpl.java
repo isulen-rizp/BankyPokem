@@ -8,9 +8,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
@@ -27,93 +27,133 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     public String abilities(String name) {
-        String response= pokeApiService.getPokemon(name);
+        ResponseEntity<String> response= pokeApiService.getPokemon(name);
         String abilitiesResponse= null;
         ObjectMapper mapper= new ObjectMapper();
 
         try {
-            JsonNode rootNode= mapper.readTree(response);
-            JsonNode jobNode= rootNode.get(Constants.ABILITIES);
-            abilitiesResponse= mapper.writeValueAsString(jobNode);
+            if (response.getStatusCode()== HttpStatus.OK){
+                JsonNode rootNode= mapper.readTree(response.getBody());
+                JsonNode jobNode= rootNode.get(Constants.ABILITIES);
+                abilitiesResponse= mapper.writeValueAsString(jobNode);
+            }
+            else{
+                abilitiesResponse= "Error al obtener abilites pokemon("+ name +"): " + response.getStatusCode() + " - " + response.getBody();
+            }
+
         } catch (JsonProcessingException e) {
+            abilitiesResponse= "Error abilites at processing pokemon ("+ name + "): " + e.getMessage();
             e.printStackTrace();
         }
 
         return abilitiesResponse;
     }
 
-    public int baseExperience(String name) {
-        String response= pokeApiService.getPokemon(name);
-        int baseExperience= 0;
+    public String baseExperience(String name) {
+        ResponseEntity<String> response= pokeApiService.getPokemon(name);
+        String result= null;
         ObjectMapper mapper= new ObjectMapper();
 
         try {
-            JsonNode rootNode= mapper.readTree(response);
-            JsonNode jobNode= rootNode.get(Constants.BASE_EXPERIENCE);
-            baseExperience= Integer.parseInt(mapper.writeValueAsString(jobNode));
+            if (response.getStatusCode()== HttpStatus.OK) {
+                JsonNode rootNode = mapper.readTree(response.getBody());
+                JsonNode jobNode= rootNode.get(Constants.BASE_EXPERIENCE);
+                result= mapper.writeValueAsString(jobNode);
+            }
+            else{
+                result= "Error al obtener baseExperience pokemon("+ name +"): " + response.getStatusCode() + " - " + response.getBody();
+            }
+
         } catch (JsonProcessingException e) {
+            result= "Error baseExperience at processing pokemon ("+ name + "): " + e.getMessage();
             e.printStackTrace();
         }
-        return baseExperience;
+        return result;
     }
 
     public String heldItems(String name) {
-        String response= pokeApiService.getPokemon(name);
-        String heldItems= null;
+        ResponseEntity<String> response= pokeApiService.getPokemon(name);
+        String result= null;
         ObjectMapper mapper= new ObjectMapper();
 
         try {
-            JsonNode rootNode= mapper.readTree(response);
-            JsonNode jobNode= rootNode.get(Constants.HELD_ITEMS);
-            heldItems= mapper.writeValueAsString(jobNode);
+            if (response.getStatusCode()== HttpStatus.OK) {
+                JsonNode rootNode = mapper.readTree(response.getBody());
+                JsonNode jobNode= rootNode.get(Constants.HELD_ITEMS);
+                result= mapper.writeValueAsString(jobNode);
+            }
+            else{
+                result= "Error al obtener heldItems pokemon("+ name +"): " + response.getStatusCode() + " - " + response.getBody();
+            }
+
         } catch (JsonProcessingException e) {
+            result= "Error heldItems at processing pokemon ("+ name + "): " + e.getMessage();
             e.printStackTrace();
         }
-        return heldItems;
+        return result;
     }
 
-    public int id(String name) {
-        String response= pokeApiService.getPokemon(name);
-        int id= 0;
+    public String id(String name) {
+        ResponseEntity<String> response= pokeApiService.getPokemon(name);
         ObjectMapper mapper= new ObjectMapper();
+        String result= null;
 
         try {
-            JsonNode rootNode= mapper.readTree(response);
-            JsonNode jobNode= rootNode.get(Constants.ID);
-            id= Integer.parseInt(mapper.writeValueAsString(jobNode));
+            if (response.getStatusCode()== HttpStatus.OK) {
+                JsonNode rootNode = mapper.readTree(response.getBody());
+                JsonNode jobNode= rootNode.get(Constants.ID);
+                result= mapper.writeValueAsString(jobNode);
+            }
+            else{
+                result= "Error al obtener ID pokemon("+ name +"): " + response.getStatusCode() + " - " + response.getBody();
+            }
+
         } catch (JsonProcessingException e) {
+            result= "Error ID at processing pokemon ("+ name + "): " + e.getMessage();
             e.printStackTrace();
         }
-        return id;
+        return result;
     }
 
     public String name(String name) {
-        String response= pokeApiService.getPokemon(name);
-        String pokName= null;
+        ResponseEntity<String> response= pokeApiService.getPokemon(name);
         ObjectMapper mapper= new ObjectMapper();
+        String result= null;
 
         try {
-            JsonNode rootNode= mapper.readTree(response);
-            JsonNode jobNode= rootNode.get(Constants.NAME);
-            pokName= mapper.writeValueAsString(jobNode);
+            if (response.getStatusCode()== HttpStatus.OK) {
+                JsonNode rootNode = mapper.readTree(response.getBody());
+                JsonNode jobNode= rootNode.get(Constants.NAME);
+                result= mapper.writeValueAsString(jobNode);
+            }
+            else{
+                result= "Error al obtener name pokemon("+ name +"): " + response.getStatusCode() + " - " + response.getBody();
+            }
         } catch (JsonProcessingException e) {
+            result= "Error name at processing pokemon ("+ name + "): " + e.getMessage();
             e.printStackTrace();
         }
-        return pokName;
+        return result;
     }
 
     public String locationAreaEncounters(String name) {
-        String response= pokeApiService.getPokemon(name);
-        String locAreaEncounters= null;
+        ResponseEntity<String> response= pokeApiService.getPokemon(name);
+        String result= null;
         ObjectMapper mapper= new ObjectMapper();
 
         try {
-            JsonNode rootNode= mapper.readTree(response);
-            JsonNode jobNode= rootNode.get(Constants.LOCATION_AREA_ENCOUNTERS);
-            locAreaEncounters= mapper.writeValueAsString(jobNode);
+            if (response.getStatusCode()== HttpStatus.OK) {
+                JsonNode rootNode = mapper.readTree(response.getBody());
+                JsonNode jobNode= rootNode.get(Constants.LOCATION_AREA_ENCOUNTERS);
+                result= mapper.writeValueAsString(jobNode);
+            }
+            else{
+                result= "Error al obtener locationAreaEncounters pokemon("+ name +"): " + response.getStatusCode() + " - " + response.getBody();
+            }
         } catch (JsonProcessingException e) {
+            result= "Error locationAreaEncounters at processing pokemon ("+ name + "): " + e.getMessage();
             e.printStackTrace();
         }
-        return locAreaEncounters;
+        return result;
     }
 }
