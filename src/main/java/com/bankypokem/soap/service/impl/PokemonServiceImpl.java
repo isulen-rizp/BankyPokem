@@ -9,12 +9,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
 @WebService(endpointInterface = "com.bankypokem.soap.service.PokemonService")
 @HandlerChain(file="handlers.xml")
 @Log4j2
+@Service
 public class PokemonServiceImpl implements PokemonService {
 
     private PokeApiService pokeApiService;
