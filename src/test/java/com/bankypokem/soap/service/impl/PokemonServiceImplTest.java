@@ -5,6 +5,9 @@ import com.bankypokem.soap.repository.RequestDataRepository;
 import com.bankypokem.soap.service.PokeApiService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -16,8 +19,12 @@ class PokemonServiceImplTest {
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
+        ResponseEntity<String> mockResponseEntity = mock(ResponseEntity.class);
         String mockJson="{\"abilities\":[{\"ability\":{\"name\":\"overgrow\",\"url\":\"https://pokeapi.co/api/v2/ability/65/\"},\"is_hidden\":false,\"slot\":1},{\"ability\":{\"name\":\"chlorophyll\",\"url\":\"https://pokeapi.co/api/v2/ability/34/\"},\"is_hidden\":true,\"slot\":3}]}";
-        when(mockPokeApiService.getPokemon("bulbasaur")).thenReturn(mockJson);
+
+        when(mockResponseEntity.getBody()).thenReturn(mockJson);
+        when(mockResponseEntity.getStatusCode()).thenReturn(HttpStatus.OK);
+        when(mockPokeApiService.getPokemon("bulbasaur")).thenReturn(mockResponseEntity);
 
         SpringContextTestUtils.setupSpringContext(mockPokeApiService, mockRequestDataRepository);
         PokemonServiceImpl service= new PokemonServiceImpl();
@@ -35,17 +42,23 @@ class PokemonServiceImplTest {
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
+
+        ResponseEntity<String> mockResponseEntity = mock(ResponseEntity.class);
         String mockJson="{\"base_experience\":64}";
-        when(mockPokeApiService.getPokemon("bulbasaur")).thenReturn(mockJson);
+
+        when(mockResponseEntity.getBody()).thenReturn(mockJson);
+        when(mockResponseEntity.getStatusCode()).thenReturn(HttpStatus.OK);
+        when(mockPokeApiService.getPokemon("bulbasaur")).thenReturn(mockResponseEntity);
 
         SpringContextTestUtils.setupSpringContext(mockPokeApiService, mockRequestDataRepository);
         PokemonServiceImpl service= new PokemonServiceImpl();
-        int result= service.baseExperience("bulbasaur");
+
+        String result= service.baseExperience("bulbasaur");
 
         verify(mockPokeApiService, times(1)).getPokemon("bulbasaur");
 
         ObjectMapper mapper= new ObjectMapper();
-        int expected= mapper.readTree(mockJson).get("base_experience").asInt();
+        String expected= mapper.writeValueAsString(mapper.readTree(mockJson).get("base_experience"));
         assertEquals(expected, result, "The baseExperience method should return the correct base experience");
     }
 
@@ -55,8 +68,12 @@ class PokemonServiceImplTest {
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
+        ResponseEntity<String> mockResponseEntity = mock(ResponseEntity.class);
         String mockJson="{\"hel_items\":[{\"item\":{\"name\":\"oran-berry\",\"url\":\"https://pokeapi.co/api/v2/item/132/\"},\"version_details\":[{\"rarity\":50,\"version\":{\"name\":\"ruby\",\"url\":\"https://pokeapi.co/api/v2/version/7/\"}},{\"rarity\":50,\"version\":{\"name\":\"sapphire\",\"url\":\"https://pokeapi.co/api/v2/version/8/\"}},{\"rarity\":50,\"version\":{\"name\":\"emerald\",\"url\":\"https://pokeapi.co/api/v2/version/9/\"}},{\"rarity\":50,\"version\":{\"name\":\"diamond\",\"url\":\"https://pokeapi.co/api/v2/version/12/\"}},{\"rarity\":50,\"version\":{\"name\":\"pearl\",\"url\":\"https://pokeapi.co/api/v2/version/13/\"}},{\"rarity\":50,\"version\":{\"name\":\"platinum\",\"url\":\"https://pokeapi.co/api/v2/version/14/\"}},{\"rarity\":50,\"version\":{\"name\":\"heartgold\",\"url\":\"https://pokeapi.co/api/v2/version/15/\"}},{\"rarity\":50,\"version\":{\"name\":\"soulsilver\",\"url\":\"https://pokeapi.co/api/v2/version/16/\"}},{\"rarity\":50,\"version\":{\"name\":\"black\",\"url\":\"https://pokeapi.co/api/v2/version/17/\"}},{\"rarity\":50,\"version\":{\"name\":\"white\",\"url\":\"https://pokeapi.co/api/v2/version/18/\"}}]},{\"item\":{\"name\":\"light-ball\",\"url\":\"https://pokeapi.co/api/v2/item/213/\"},\"version_details\":[{\"rarity\":5,\"version\":{\"name\":\"ruby\",\"url\":\"https://pokeapi.co/api/v2/version/7/\"}},{\"rarity\":5,\"version\":{\"name\":\"sapphire\",\"url\":\"https://pokeapi.co/api/v2/version/8/\"}},{\"rarity\":5,\"version\":{\"name\":\"emerald\",\"url\":\"https://pokeapi.co/api/v2/version/9/\"}},{\"rarity\":5,\"version\":{\"name\":\"diamond\",\"url\":\"https://pokeapi.co/api/v2/version/12/\"}},{\"rarity\":5,\"version\":{\"name\":\"pearl\",\"url\":\"https://pokeapi.co/api/v2/version/13/\"}},{\"rarity\":5,\"version\":{\"name\":\"platinum\",\"url\":\"https://pokeapi.co/api/v2/version/14/\"}},{\"rarity\":5,\"version\":{\"name\":\"heartgold\",\"url\":\"https://pokeapi.co/api/v2/version/15/\"}},{\"rarity\":5,\"version\":{\"name\":\"soulsilver\",\"url\":\"https://pokeapi.co/api/v2/version/16/\"}},{\"rarity\":1,\"version\":{\"name\":\"black\",\"url\":\"https://pokeapi.co/api/v2/version/17/\"}},{\"rarity\":1,\"version\":{\"name\":\"white\",\"url\":\"https://pokeapi.co/api/v2/version/18/\"}},{\"rarity\":5,\"version\":{\"name\":\"black-2\",\"url\":\"https://pokeapi.co/api/v2/version/21/\"}},{\"rarity\":5,\"version\":{\"name\":\"white-2\",\"url\":\"https://pokeapi.co/api/v2/version/22/\"}},{\"rarity\":5,\"version\":{\"name\":\"x\",\"url\":\"https://pokeapi.co/api/v2/version/23/\"}},{\"rarity\":5,\"version\":{\"name\":\"y\",\"url\":\"https://pokeapi.co/api/v2/version/24/\"}},{\"rarity\":5,\"version\":{\"name\":\"omega-ruby\",\"url\":\"https://pokeapi.co/api/v2/version/25/\"}},{\"rarity\":5,\"version\":{\"name\":\"alpha-sapphire\",\"url\":\"https://pokeapi.co/api/v2/version/26/\"}},{\"rarity\":5,\"version\":{\"name\":\"sun\",\"url\":\"https://pokeapi.co/api/v2/version/27/\"}},{\"rarity\":5,\"version\":{\"name\":\"moon\",\"url\":\"https://pokeapi.co/api/v2/version/28/\"}},{\"rarity\":5,\"version\":{\"name\":\"ultra-sun\",\"url\":\"https://pokeapi.co/api/v2/version/29/\"}},{\"rarity\":5,\"version\":{\"name\":\"ultra-moon\",\"url\":\"https://pokeapi.co/api/v2/version/30/\"}}]}]}";
-        when(mockPokeApiService.getPokemon("pikachu")).thenReturn(mockJson);
+
+        when(mockResponseEntity.getBody()).thenReturn(mockJson);
+        when(mockResponseEntity.getStatusCode()).thenReturn(HttpStatus.OK);
+        when(mockPokeApiService.getPokemon("pikachu")).thenReturn(mockResponseEntity);
 
         SpringContextTestUtils.setupSpringContext(mockPokeApiService, mockRequestDataRepository);
         PokemonServiceImpl service= new PokemonServiceImpl();
@@ -75,8 +92,12 @@ class PokemonServiceImplTest {
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
+        ResponseEntity<String> mockResponseEntity = mock(ResponseEntity.class);
         String mockJson="{\"location_area_encounters\":\"https://pokeapi.co/api/v2/pokemon/25/encounters\"}";
-        when(mockPokeApiService.getPokemon("pikachu")).thenReturn(mockJson);
+
+        when(mockResponseEntity.getBody()).thenReturn(mockJson);
+        when(mockResponseEntity.getStatusCode()).thenReturn(HttpStatus.OK);
+        when(mockPokeApiService.getPokemon("pikachu")).thenReturn(mockResponseEntity);
 
         SpringContextTestUtils.setupSpringContext(mockPokeApiService, mockRequestDataRepository);
         PokemonServiceImpl service= new PokemonServiceImpl();
@@ -95,17 +116,21 @@ class PokemonServiceImplTest {
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
+        ResponseEntity<String> mockResponseEntity = mock(ResponseEntity.class);
         String mockJson="{\"id\":1}";
-        when(mockPokeApiService.getPokemon("bulbasaur")).thenReturn(mockJson);
+
+        when(mockResponseEntity.getBody()).thenReturn(mockJson);
+        when(mockResponseEntity.getStatusCode()).thenReturn(HttpStatus.OK);
+        when(mockPokeApiService.getPokemon("bulbasaur")).thenReturn(mockResponseEntity);
 
         SpringContextTestUtils.setupSpringContext(mockPokeApiService, mockRequestDataRepository);
         PokemonServiceImpl service= new PokemonServiceImpl();
-        int result= service.id("bulbasaur");
+        String result= service.id("bulbasaur");
 
         verify(mockPokeApiService, times(1)).getPokemon("bulbasaur");
 
         ObjectMapper mapper= new ObjectMapper();
-        int expected= mapper.readTree(mockJson).get("id").asInt();
+        String expected= mapper.writeValueAsString(mapper.readTree(mockJson).get("id"));
         assertEquals(expected, result, "The id method should return the correct id");
     }
 
@@ -115,8 +140,12 @@ class PokemonServiceImplTest {
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
+        ResponseEntity<String> mockResponseEntity = mock(ResponseEntity.class);
         String mockJson="{\"name\":\"bulbasaur\"}";
-        when(mockPokeApiService.getPokemon("bulbasaur")).thenReturn(mockJson);
+
+        when(mockResponseEntity.getBody()).thenReturn(mockJson);
+        when(mockResponseEntity.getStatusCode()).thenReturn(HttpStatus.OK);
+        when(mockPokeApiService.getPokemon("bulbasaur")).thenReturn(mockResponseEntity);
 
         SpringContextTestUtils.setupSpringContext(mockPokeApiService, mockRequestDataRepository);
         PokemonServiceImpl service= new PokemonServiceImpl();

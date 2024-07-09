@@ -10,13 +10,13 @@ public interface PokemonService {
     String abilities(String name);
 
     @WebMethod
-    int baseExperience(String name);
+    String baseExperience(String name);
 
     @WebMethod
     String heldItems(String name);
 
     @WebMethod
-    int id(String name);
+    String id(String name);
 
     @WebMethod
     String name(String name);

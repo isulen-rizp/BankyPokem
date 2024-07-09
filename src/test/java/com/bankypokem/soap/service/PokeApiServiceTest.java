@@ -28,10 +28,10 @@ class PokeApiServiceTest {
         PokeApiService service= new PokeApiService();
         service.setRestTemplate(mockRestTemplate);
 
-        String result= service.getPokemon("bulbasaur");
+        ResponseEntity<String> result= service.getPokemon("bulbasaur");
 
         verify(mockRestTemplate, times(1)).exchange(anyString(), any(HttpMethod.class),  any(HttpEntity.class), eq(String.class));
-        assertEquals(mockJson, result, "The getPokemon method should return the correct JSON");
+        assertEquals(mockJson, result.getBody(), "The getPokemon method should return the correct JSON");
 
     }
 }
