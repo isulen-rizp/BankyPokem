@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class PokemonServiceImplTest {
+class PokemonServiceImplTest {
 
     @Test
-    public void testAbilities() throws Exception{
+    void testAbilities() throws Exception{
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
@@ -31,7 +31,7 @@ public class PokemonServiceImplTest {
     }
 
     @Test
-    public void testBaseExperience() throws Exception{
+    void testBaseExperience() throws Exception{
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
@@ -51,7 +51,7 @@ public class PokemonServiceImplTest {
 
 
     @Test
-    public void testHeldItems() throws Exception{
+    void testHeldItems() throws Exception{
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
@@ -71,7 +71,7 @@ public class PokemonServiceImplTest {
 
 
     @Test
-    public void testLocationAreaEncounters() throws Exception{
+    void testLocationAreaEncounters() throws Exception{
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
@@ -91,7 +91,7 @@ public class PokemonServiceImplTest {
 
 
     @Test
-    public void testId() throws Exception{
+    void testId() throws Exception{
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
@@ -111,7 +111,7 @@ public class PokemonServiceImplTest {
 
 
     @Test
-    public void testName() throws Exception{
+    void testName() throws Exception{
         PokeApiService mockPokeApiService= mock(PokeApiService.class);
         RequestDataRepository mockRequestDataRepository= mock(RequestDataRepository.class);
 
@@ -128,7 +128,4 @@ public class PokemonServiceImplTest {
         String expected= mapper.writeValueAsString(mapper.readTree(mockJson).get("name"));
         assertEquals(expected, result, "The name method should return the correct name");
     }
-
-
-
 }

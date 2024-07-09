@@ -1,7 +1,6 @@
 package com.bankypokem.soap.service.impl;
 
 import com.bankypokem.soap.SpringContext;
-import com.bankypokem.soap.repository.RequestDataRepository;
 import com.bankypokem.soap.service.PokeApiService;
 import com.bankypokem.soap.service.PokemonService;
 import com.bankypokem.soap.util.Constants;
@@ -18,11 +17,9 @@ import javax.jws.WebService;
 public class PokemonServiceImpl implements PokemonService {
 
     private PokeApiService pokeApiService;
-    private RequestDataRepository requestDataRepository;
 
     public PokemonServiceImpl(){
         pokeApiService= SpringContext.getBean(PokeApiService.class);
-        requestDataRepository= SpringContext.getBean(RequestDataRepository.class);
     }
 
     public String abilities(String name) {
